@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<style>
+    table td,th{
+        padding: .2em .5em;
+    }
+</style>
+<body>
+<header>
+    <h1>Employee Management System</h1>
+    <ul>
+        <li><a href="/addEmployee">Add New</a></li>
+        <li><a href="/">View All</a></li>
+    </ul>
+</header>
+<section id="content">
+    <h1>Employee Details</h1>
+    <div th:if="${emp != null}">
+        <table border="1">
+            <tr>
+                <td>ID</td>
+                <td th:text="${emp.id}">1</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td th:text="${emp.name}">Name</td>
+            </tr>
+            <tr>
+                <td>Department</td>
+                <td th:text="${emp.department}">Name</td>
+            </tr>
+            <tr>
+                <td>Designation</td>
+                <td th:text="${emp.designation}">Name</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td th:text="${emp.email}">Email</td>
+            </tr>
+
+            <tr>
+                <td>Phone</td>
+                <td th:text="${emp.phone}">Phone</td>
+            </tr>
+
+        </table>
+    </div>
+    <br>
+    <a href="/">Go back to All Employees</a>
+
+
+    <div th:if="${error != null}">
+        <strong th:text="${error}">
+            Error
+        </strong>
+    </div>
+</section>
+
+</body>
+</html>

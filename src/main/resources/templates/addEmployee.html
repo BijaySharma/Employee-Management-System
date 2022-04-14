@@ -1,0 +1,76 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Employee</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    th{
+        text-align: left;
+    }
+    table td,th{
+        padding: .2em .5em;
+    }
+</style>
+<body>
+    <header>
+        <h1>Employee Management System</h1>
+        <ul>
+            <li><a href="/addEmployee">Add New</a></li>
+            <li><a href="/">View All</a></li>
+        </ul>
+    </header>
+    <section id="content">
+
+        <h1>Add New Employee</h1>
+
+        <div th:if="${mistakes != null}">
+            <ul>
+                <li th:each="m:${mistakes}" th:text="${m}">Mistake</li>
+            </ul>
+        </div>
+
+        <form action="#" th:action="@{/addEmployee}" method="post" th:object="${employee}">
+
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" th:field="*{name}"></td>
+                </tr>
+
+                <tr>
+                    <th>Department</th>
+                    <td>
+                        <select th:field="*{department}">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Human Resource">Human Resource</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Designation</th>
+                    <td><input type="text" th:field="*{designation}"></td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td><input type="email" th:field="*{email}"></td>
+                </tr>
+
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="text" th:field="*{phone}"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="">
+                        <input type="submit" value="Submit" style="display: block; padding: .5em 0; margin-top: 1em; background-color: black; color: white; width: 100%">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </section>
+</body>
+</html>

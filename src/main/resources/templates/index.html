@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>Employee Management System</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <style>
+        .pageNumber{
+            display: inline-block;
+            margin: 2em .3em;
+            padding: .3em;
+            text-decoration: none;
+            background: black;
+            color: white;
+        }
+        .selectedPage{
+            background: red;
+        }
+
+        table td,th{
+            padding: .2em .5em;
+        }
+
+    </style>
+    <body>
+    <header>
+        <h1>Employee Management System</h1>
+        <ul>
+            <li><a href="/addEmployee">Add New</a></li>
+            <li><a href="/">View All</a></li>
+        </ul>
+    </header>
+    <section id="content">
+    <h1>List of Employees</h1>
+    <table border="1">
+        <tr>
+            <th>Sort By</th>
+            <td colspan="6">
+                <select>
+                    <option value="id">ID</option>
+                    <option value="name">Name</option>
+                    <option value="department">Department</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th colspan="3">Opreations</th>
+        </tr>
+        <tr th:each="emp:${employees}">
+            <td th:text="${emp.id}">1</td>
+            <td th:text="${emp.name}">John Doe</td>
+            <td th:text="${emp.department}">Sales</td>
+            <td th:text="${emp.designation}">Senior Manager</td>
+            <td><a th:href="'/employees/'+${emp.id}">View</a></td>
+            <td><a th:href="'/updateEmployee/'+${emp.id}">Edit</a></td>
+            <td><a id="deleteEmp" th:href="'/delete/'+${emp.id}">Delete</a></td>
+        </tr>
+    </table>
+    <div id="pages"></div>
+    </section>
+
+    <script th:inline="javascript">
+        const sortBy = [[${sortBy}]];
+        const options = document.getElementsByTagName("option");
+        if(sortBy == "id"){
+            options[0].selected = true;
+        }
+
+        if(sortBy == "name"){
+            options[1].selected = true;
+        }
+
+        if(sortBy == "department"){
+            options[2].selected = true;
+        }
+
+        const selectElement = document.getElementsByTagName("select")[0];
+        selectElement.onchange = (e) => {
+            window.location.href= "/?sortBy=" + selectElement.value;
+        }
+
+    </script>
+
+   <script th:inline="javascript">
+       const totalPages = [[${totalPages}]];
+       const currentPage = Number([[${currentPage}]]);
+       const pagesContainer = document.getElementById("pages");
+
+       for(let i = 0; i < totalPages; i++){
+           const link = document.createElement("a");
+           link.setAttribute("href", "/?page=" + i + "&sortBy=" + sortBy);
+           link.setAttribute("class", "pageNumber");
+           if(i == currentPage){
+               link.setAttribute("class", "pageNumber selectedPage");
+               link.removeAttribute("href");
+           }
+           link.innerHTML = i+1;
+           pagesContainer.appendChild(link);
+       }
+
+   </script>
+    </body>
+</html>
